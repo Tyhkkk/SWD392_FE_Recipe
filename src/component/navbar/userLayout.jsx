@@ -10,7 +10,7 @@ const UserLayout = ({ children }) => {
 
       {/* Main Content */}
       <main
-        className="flex-grow w-full flex flex-col items-center justify-center px-1 py-1 bg-[#D4A373]"
+        className="flex-grow w-full flex flex-col items-center justify-center px-1 py-1 bg-[#FFFAD6]"
       >
         {children}
       </main>
