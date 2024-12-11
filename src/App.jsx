@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserLayout from "./component/navbar/userLayout";
 import AdminLayout from "./component/navbar/adminLayout";
 import HomePage from "./page/userpage/homePage";
+import RecipePage from "./page/userpage/recipePage";
 import AdminHome from "./page/adminpage/adminHome";
 
 const App = () => {
@@ -10,8 +11,10 @@ const App = () => {
     <Router>
       <Routes>
         {/* Home Page */}
-        <Route path="/"element={<UserLayout> <HomePage /> </UserLayout>}/>
-        <Route path="/admin"element={<AdminLayout> <AdminHome /> </AdminLayout>}/>
+        <Route path="/" element={<UserLayout> <HomePage /> </UserLayout>}/>
+        <Route path="/recipes" element={<UserLayout> <RecipePage /> </UserLayout>}/>
+        <Route path="/admin" element={<AdminLayout> <AdminHome /> </AdminLayout>}/>
+
         {/* Add more routes as needed */}
       </Routes>
     </Router>
