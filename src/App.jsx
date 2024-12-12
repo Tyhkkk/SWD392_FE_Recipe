@@ -7,6 +7,7 @@ import RecipePage from "./page/userpage/recipePage";
 import AboutUs from "./page/userpage/aboutus";
 import ContactUs from "./page/userpage/contactUs";
 import Subscription from "./page/userpage/Subscription";
+ {/* Admin Route */}
 import AdminHome from "./page/adminpage/adminHome";
 
 const App = () => {
