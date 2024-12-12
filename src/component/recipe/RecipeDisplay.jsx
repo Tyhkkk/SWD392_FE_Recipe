@@ -72,7 +72,7 @@ const RecipeDisplay = () => {
             <img
               src={recipe.image || "https://via.placeholder.com/300"}
               alt={recipe.title}
-              className="w-full h-40 object-cover"
+              className="w-full h-72 object-cover"
             />
             <div className="p-4">
               <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-md">
