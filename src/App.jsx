@@ -4,7 +4,7 @@ import UserLayout from "./component/navbar/userLayout";
 import AdminLayout from "./component/navbar/adminLayout";
 import HomePage from "./page/userpage/homePage";
 import RecipePage from "./page/userpage/recipePage";
-import AboutUs from "./page/userpage/aboutus";
+import AboutUs from "./page/userpage/AboutUs";
 import ContactUs from "./page/userpage/contactUs";
 import Subscription from "./page/userpage/Subscription";
  {/* Admin Route */}
