@@ -7,6 +7,8 @@ import RecipePage from "./page/userpage/recipePage";
 import AboutUs from "./page/userpage/AboutUs";
 import ContactUs from "./page/userpage/contactUs";
 import Subscription from "./page/userpage/Subscription";
+import RecipeDetail from "./page/userpage/RecipeDetail";
+import RecipeSteps from "./page/userpage/RecipeSteps";
  {/* Admin Route */}
 import AdminHome from "./page/adminpage/adminHome";
 
@@ -17,6 +19,8 @@ const App = () => {
         {/* Home Page */}
         <Route path="/" element={<UserLayout> <HomePage /> </UserLayout>}/>
         <Route path="/recipes" element={<UserLayout> <RecipePage /> </UserLayout>}/>
+        <Route path="/recipe/:id" element={<UserLayout> <RecipeDetail /> </UserLayout>} />
+        <Route path="/recipe/:id/steps" element={<UserLayout> <RecipeSteps /> </UserLayout>} />
         <Route path="/aboutus" element={<UserLayout> <AboutUs /> </UserLayout>}/>
         <Route path="/contact" element={<UserLayout> <ContactUs /> </UserLayout>}/>
         <Route path="/pricing" element={<UserLayout> <Subscription /> </UserLayout>}/>

@@ -71,3 +71,15 @@ export const searchRecipesByTitle = async (title) => {
     throw error;
   }
 };
+
+
+export const getRecipeById = async (id) => {
+  try {
+    const response = await api.get(`/api/Recipes/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching recipe by ID:", error);
+    throw error;
+  }
+};
+

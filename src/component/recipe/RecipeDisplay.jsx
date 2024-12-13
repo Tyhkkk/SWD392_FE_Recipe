@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRecipesByPage, fetchAllSearchResults, searchRecipesByTitle } from "../../lib/recipeApi/recipeApi";
+import { useNavigate } from "react-router-dom"; // Add navigation for recipe details
+import {
+  getRecipesByPage,
+  fetchAllSearchResults,
+  searchRecipesByTitle,
+} from "../../lib/recipeApi/recipeApi";
 import { getAllCategories } from "../../lib/recipeApi/categoryApi";
 import { updateFilters } from "../../store/filtersSlice";
 import Loading from "../loading";
@@ -13,8 +18,9 @@ const RecipeDisplay = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchTitle, setSearchTitle] = useState(""); // State for title search
 
-  const filters = useSelector((state) => state.filters); // Get filters from Redux store
+  const filters = useSelector((state) => state.filters); // Redux store
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Navigation for recipe details
 
   // Paginate recipes
   const paginateRecipes = (allRecipes, itemsPerPage) => {
@@ -27,7 +33,7 @@ const RecipeDisplay = () => {
     return { paginatedRecipes, totalPages };
   };
 
-  // Fetch recipes from API
+  // Fetch recipes
   const fetchRecipes = async (page) => {
     setIsLoading(true);
     try {
@@ -35,11 +41,11 @@ const RecipeDisplay = () => {
       let paginatedData = null;
 
       if (searchTitle.trim()) {
-        // Search by title if a title is entered
+        // Search by title
         allRecipes = await searchRecipesByTitle(searchTitle);
         paginatedData = paginateRecipes(allRecipes, 10);
       } else if (filters.ingredients.length > 0 || filters.category) {
-        // Fetch filtered recipes by category/ingredients
+        // Filtered recipes
         allRecipes = await fetchAllSearchResults(filters.category, filters.ingredients);
         paginatedData = paginateRecipes(allRecipes, 10);
       } else {
@@ -59,7 +65,7 @@ const RecipeDisplay = () => {
     }
   };
 
-  // Fetch all categories
+  // Fetch categories
   const fetchCategories = async () => {
     try {
       const allCategories = await getAllCategories();
@@ -79,17 +85,23 @@ const RecipeDisplay = () => {
     setCurrentPage(1); // Reset to the first page
   };
 
-  // Handle title search
+  // Handle search bar input
   const handleSearchChange = (e) => {
-    setSearchTitle(e.target.value); // Update the searchTitle state
+    setSearchTitle(e.target.value);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setCurrentPage(1); // Reset to the first page
-    fetchRecipes(1); // Fetch recipes based on the title
+    setCurrentPage(1);
+    fetchRecipes(1); // Fetch based on title
   };
 
+  // Handle recipe card click
+  const handleRecipeClick = (id) => {
+    navigate(`/recipe/${id}`); // Navigate to RecipeDetail
+  };
+
+  // Fetch recipes and categories on load or filter changes
   useEffect(() => {
     fetchRecipes(currentPage);
     fetchCategories();
@@ -113,7 +125,7 @@ const RecipeDisplay = () => {
         {categories.map((category) => (
           <button
             key={category.id}
-            onClick={() => handleCategoryClick(category.name)} // Handle click
+            onClick={() => handleCategoryClick(category.name)}
             className={`px-3 py-1 rounded-md text-sm font-medium border ${
               filters.category === category.name
                 ? "bg-blue-500 text-white"
@@ -125,7 +137,7 @@ const RecipeDisplay = () => {
         ))}
       </div>
 
-      {/* Recipe List */}
+      {/* Recipes */}
       {isLoading ? (
         <Loading />
       ) : (
@@ -135,7 +147,8 @@ const RecipeDisplay = () => {
               recipes.map((recipe) => (
                 <div
                   key={recipe.id}
-                  className="border border-gray-300 rounded-lg shadow-md overflow-hidden"
+                  className="border border-gray-300 rounded-lg shadow-md overflow-hidden cursor-pointer"
+                  onClick={() => handleRecipeClick(recipe.id)} // Navigate on click
                 >
                   <img
                     src={recipe.image || "https://via.placeholder.com/300"}
@@ -169,7 +182,6 @@ const RecipeDisplay = () => {
             >
               Prev
             </button>
-
             {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
               <button
                 key={page}
@@ -181,7 +193,6 @@ const RecipeDisplay = () => {
                 {page}
               </button>
             ))}
-
             <button
               className={`px-4 py-2 mx-1 rounded-md ${
                 currentPage === totalPages
