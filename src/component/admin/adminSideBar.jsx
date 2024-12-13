@@ -3,6 +3,7 @@ import { FaChartBar, FaSignOutAlt, FaBook,  FaUser } from 'react-icons/fa';
 import { BiSolidCategory } from "react-icons/bi";
 import { CiReceipt } from "react-icons/ci";
 import { MdOutlineCropOriginal } from "react-icons/md";
+import image from '../../assets/edited_logo.png'
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const AdminSidebar = () => {
     <div className="h-full w-auto bg-white shadow-lg flex flex-col p-4">
       {/* Logo */}
       <div className="flex items-center space-x-3 mb-8 text-left">
-        <img src="/src/assets/edited_logo.png" alt="Camellia Logo" className="h-10" />
+        <img src={image} alt="Camellia Logo" className="h-10" />
         <h1 className="text-3xl font-bold">Recipe Heaven</h1>
       </div>
 
