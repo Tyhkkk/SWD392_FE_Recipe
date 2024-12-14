@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../../src/lib/apiService";
 
-const AuthContext = createContext();
+export const AuthContext = createContext(); // Named export for AuthContext
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -18,12 +18,12 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
-      const response = await api.post("/api/Login/login", { username, password });
-      const { token, role, userId, username: name } = response.data;
+      const response = await api.post("/api/Login/login", { email, password });
+      const { token, role, userId, email: userEmail } = response.data;
 
-      const userData = { userId, username: name, role };
+      const userData = { userId, email: userEmail, role };
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", token);
 
@@ -35,7 +35,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await api.post("/api/Login/logout");
+    } catch (error) {
+      console.error("Logout API failed:", error);
+    }
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);

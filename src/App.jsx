@@ -9,6 +9,7 @@ import ContactUs from "./page/userpage/contactUs";
 import Subscription from "./page/userpage/Subscription";
 import RecipeDetail from "./page/userpage/RecipeDetail";
 import RecipeSteps from "./page/userpage/RecipeSteps";
+import ProfileCustomer from "./page/userpage/profileCustomer";
 {
   /* Auth Route */
 }
@@ -24,6 +25,10 @@ import CategoryPage from "./page/adminpage/categoryPage";
 import IngredientPage from "./page/adminpage/ingredientPage";
 import OriginPage from "./page/adminpage/originPage";
 import ProfileAdmin from "./page/adminpage/profileAdmin";
+import RecipeAdminPage from "./page/adminpage/recipeAdminPage";
+import RecipeAdminDetail from "./page/adminpage/recipeAdminDetail";
+import RecipeFormPage from "./component/recipe/RecipeFormPage";
+
 const App = () => {
   return (
     <Router>
@@ -111,6 +116,33 @@ const App = () => {
               }
             />
             <Route
+              path="/admin/recipe"
+              element={
+                <AdminLayout>
+                  {" "}
+                  <RecipeAdminPage />{" "}
+                </AdminLayout>
+              }
+            />
+            <Route
+              path="/admin/recipe/add"
+              element={
+                <AdminLayout>
+                  {" "}
+                  <RecipeFormPage />{" "}
+                </AdminLayout>
+              }
+            />
+            <Route
+              path="/admin/recipe/:id"
+              element={
+                <AdminLayout>
+                  {" "}
+                  <RecipeAdminDetail />{" "}
+                </AdminLayout>
+              }
+            />
+            <Route
               path="/admin/category"
               element={
                 <AdminLayout>
@@ -154,7 +186,7 @@ const App = () => {
               element={
                 <UserLayout>
                   {" "}
-                  <HomePage />{" "}
+                  <ProfileCustomer />{" "}
                 </UserLayout>
               }
             />

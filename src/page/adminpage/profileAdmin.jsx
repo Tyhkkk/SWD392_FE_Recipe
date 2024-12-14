@@ -13,8 +13,8 @@ const ProfileAdmin = () => {
       <h1 className="text-3xl font-bold mb-4">Admin Profile</h1>
 
       <div className="mb-4">
-        <h2 className="text-lg font-semibold">Username:</h2>
-        <p>{user.username}</p>
+        <h2 className="text-lg font-semibold">Email:</h2>
+        <p>{user.email}</p>
       </div>
 
       <div className="mb-4">

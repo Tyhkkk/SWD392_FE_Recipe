@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import loginImage from "../../assets/Login.jpg";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(formData.username, formData.password);
+    const success = await login(formData.email, formData.password);
 
     if (success) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -36,7 +36,7 @@ const Login = () => {
         }
       }, 3000);
     } else {
-      toast.error("Invalid username or password. Please try again.", {
+      toast.error("Invalid email or password. Please try again.", {
         position: "top-center",
         autoClose: 3000,
       });
@@ -52,18 +52,18 @@ const Login = () => {
 
           <form onSubmit={handleFormSubmit}>
             <div className="mb-6">
-              <label htmlFor="username" className="block text-lg font-medium text-gray-700">
-                Username
+              <label htmlFor="email" className="block text-lg font-medium text-gray-700">
+                Email
               </label>
               <div className="relative mt-2">
-                <FaUser className="absolute top-3 left-3 text-gray-400" />
+                <FaEnvelope className="absolute top-3 left-3 text-gray-400" />
                 <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                   className="pl-10 w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>

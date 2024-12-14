@@ -1,5 +1,4 @@
-// import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import logo from '../../assets/edited_logo.png'; // Path to the logo
@@ -7,7 +6,19 @@ import logo from '../../assets/edited_logo.png'; // Path to the logo
 const Header = () => {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+
+  // Check localStorage for user and token on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    if (token && userData) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [user]); // Re-run if the user context changes
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -16,6 +27,7 @@ const Header = () => {
   const handleLogout = () => {
     logout(); // Clear token and user state via authContext
     setIsDropdownOpen(false); // Close the dropdown menu
+    setIsAuthenticated(false); // Update state to unauthenticated
     navigate('/'); // Redirect to the home page
   };
 
@@ -75,12 +87,12 @@ const Header = () => {
 
         {/* User Authentication Dropdown or Login/Sign Up Buttons */}
         <div className="relative">
-          {user ? (
+          {isAuthenticated ? (
             <div
               className="flex items-center space-x-2 cursor-pointer"
               onClick={toggleDropdown}
             >
-              <span className="text-lg font-medium">{`Welcome, ${user.username}`}</span>
+              <span className="text-lg font-medium">{`Welcome, ${user?.username || 'User'}`}</span>
               <i
                 className={`fas fa-chevron-down ${
                   isDropdownOpen ? 'rotate-180' : ''
@@ -104,16 +116,16 @@ const Header = () => {
             </div>
           )}
 
-          {isDropdownOpen && user && (
+          {isDropdownOpen && isAuthenticated && (
             <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-lg shadow-lg py-2">
               <Link
-                to="/profile"
+                to="/profileUser"
                 className="block px-4 py-2 hover:bg-gray-100 transition duration-300"
               >
                 Account
               </Link>
               <Link
-                to="/subscriptions"
+                to="/pricing"
                 className="block px-4 py-2 hover:bg-gray-100 transition duration-300"
               >
                 My Subscriptions
