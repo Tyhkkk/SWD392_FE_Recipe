@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getRecipesByPage } from "../../lib/recipeApi/recipeAPI";
+import { getRecipesByPage } from "../../lib/recipeApi/recipeeAPI";
 import { useNavigate } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
 
